@@ -1,6 +1,6 @@
 #ifndef NODE_H
 #define NODE_H
-
+#include "btree.h"
 #include <vector>
 
 using namespace std;
@@ -13,18 +13,18 @@ class Node {
     bool isLeaf;
 
     public: 
-        Node(unsigned int size, bool isLeaf = true) : size(size), isLeaf(isLeaf) {
+        explicit Node(unsigned int size, bool isLeaf = true) : size(size), isLeaf(isLeaf) {
             keys.resize(size - 1);
             childs.resize(size);
         }
 
-        /**
-         * An alternative is to create two different nodes (Internal and Leaf) that inherite from Node 
-         * an implement this function
-         */
-        //virtual bool isLeaf() = 0;
+        void clearNode(){
+            keys.clear();
+            delete this;
+            this = nullptr;
+        }
 
-    friend class BTree; 
+        friend class Tree;
 };
 
 #endif
