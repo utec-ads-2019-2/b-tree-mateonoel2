@@ -35,7 +35,7 @@ class BTree {
                 if (root->n == 2*degree-1){
                     auto temp = new Node<T>(degree, false);
                     temp->childs[0] = root;
-                    temp->splitChild(0, root);
+                    temp->split(0, root);
 
                     int i = 0;
                     if (temp->keys[0] < k)
@@ -69,8 +69,6 @@ class BTree {
             }
             return true;
         }
-
-        void print() {}
 
         ~BTree(){
             killTree(root);

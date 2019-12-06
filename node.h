@@ -36,7 +36,7 @@ class Node {
                     i--;
 
                 if (childs[i+1]->n == 2*size-1){
-                    splitChild(i+1, childs[i+1]);
+                    split(i+1, childs[i+1]);
 
                     if (keys[i+1] < k)
                         i++;
@@ -46,7 +46,7 @@ class Node {
 
         }
 
-        void splitChild(int i, Node<T>* y){
+        void split(int i, Node<T>* y){
             auto newNode = new Node<T>(y->t, y->leaf);
             newNode->n = size - 1;
 
@@ -98,9 +98,9 @@ class Node {
             int index = findKey(k);
             if (index < n and keys[index] == k){
                 if (isLeaf)
-                    removeFromLeaf(index);
+                    removeLeaf(index);
                 else
-                    removeFromNonLeaf(index);
+                    removeNonLeaf(index);
             }
             else{
                 bool flag = index == n;
@@ -114,13 +114,13 @@ class Node {
             }
         }
 
-        void removeFromLeaf (int index){
+        void removeLeaf (int index){
             for (int i=index+1; i<n; ++i)
                 keys[i-1] = keys[i];
             n--;
         }
 
-        void removeFromNonLeaf(int index){
+        void removeNonLeaf(int index){
             int k = keys[index];
             if (childs[index]->n >= size){
                 int pred = getPred(index);
@@ -156,10 +156,10 @@ class Node {
 
         void fill(int index){
             if (index!=0 and childs[index-1]->n>=size)
-                borrowFromPrev(index);
+                FromPrev(index);
 
             else if (index!=n && childs[index+1]->n>=size)
-                borrowFromNext(index);
+                FromNext(index);
 
             else{
                 if (index != n)
@@ -169,7 +169,7 @@ class Node {
             }
         }
 
-    void borrowFromPrev(int index){
+    void FromPrev(int index){
         Node<T>* child = childs[index];
         Node<T>* sibling = childs[index-1];
 
@@ -192,7 +192,7 @@ class Node {
         sibling->n -= 1;
     }
 
-    void borrowFromNext(int index){
+    void FromNext(int index){
         Node<T>* child=childs[index];
         Node<T>* sibling=childs[index+1];
 
