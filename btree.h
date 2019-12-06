@@ -23,7 +23,34 @@ class BTree {
             return (root == NULL)? NULL : root->search(k);
         }
 
-        bool insert(int k, T data) {}
+        bool insert(int k, T data) {
+            if (search(k))
+                return false;
+            if (root == NULL){
+                root = new Node<T>(degree, true);
+                root->keys[0] = k;
+                root->n = 1;
+            }
+            else{
+                if (root->n == 2*degree-1){
+                    auto temp = new Node<T>(degree, false);
+                    temp->childs[0] = root;
+                    temp->splitChild(0, root);
+
+                    int i = 0;
+                    if (temp->keys[0] < k)
+                        i++;
+
+                    temp->childs[i]->insertNonFull(k);
+
+                    root = temp;
+                }
+                else{
+                    root->insertNonFull(k);
+                }
+            }
+            return true;
+        }
 
         bool remove(int k) {}
 
