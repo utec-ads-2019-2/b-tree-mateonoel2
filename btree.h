@@ -24,7 +24,7 @@ class BTree {
         }
 
         bool insert(int k, T data) {
-            if (search(k))
+            if (!search(k))
                 return false;
             if (root == NULL){
                 root = new Node<T>(degree, true);
@@ -52,7 +52,23 @@ class BTree {
             return true;
         }
 
-        bool remove(int k) {}
+        bool remove(int k) {
+            if (!root){
+                return false;
+            }
+
+            root->remove(k);
+
+            if (root->n==0){
+                Node<T>* temp = root;
+                if (root->isLeaf)
+                    root = NULL;
+                else
+                    root = root->childs[0];
+                delete temp;
+            }
+            return true;
+        }
 
         void print() {}
 
