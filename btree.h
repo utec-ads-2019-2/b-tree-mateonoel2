@@ -19,20 +19,15 @@ class BTree {
     public:
         BTree(unsigned int degree) : degree(degree), root(nullptr) {};
 
-        T search(int k) { 
-            // TODO
-        } 
-
-        bool insert(int k, T data) {
+        Node<T>* search(int k){
+            return (root == NULL)? NULL : root->search(k);
         }
 
-        bool remove(int k) {
-            // TODO
-        }
+        bool insert(int k, T data) {}
 
-        void print() {
-            // TODO
-        }
+        bool remove(int k) {}
+
+        void print() {}
 
         ~BTree(){
             killTree(root);
