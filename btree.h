@@ -14,6 +14,7 @@ class BTree {
                     killTree(c);
                     node->childs.clear();}
             }
+            // Faltaría dar delete
             node->clearNode();
         }
     public:
@@ -68,6 +69,12 @@ class BTree {
                 delete temp;
             }
             return true;
+        }
+
+        void print() {
+            if (root) {
+                root->print();
+            }
         }
 
         ~BTree(){

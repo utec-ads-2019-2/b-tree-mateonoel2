@@ -2,6 +2,8 @@
 #define NODE_H
 #include "btree.h"
 #include <vector>
+#include <queue> 
+#include <iostream> 
 
 using namespace std;
 
@@ -47,12 +49,13 @@ class Node {
         }
 
         void split(int i, Node<T>* y){
+            // Qué es t?
             auto newNode = new Node<T>(y->t, y->leaf);
             newNode->n = size - 1;
 
             for (int j = 0; j < size-1; j++)
                 newNode->keys[j] = y->keys[j+size];
-
+            // leaf??
             if (y->leaf == false){
                 for (int j = 0; j < size; j++)
                     newNode->childs[j] = y->childs[j+size];
@@ -240,11 +243,35 @@ class Node {
 
         delete(sibling);
     }
+
+    void print() {
+        queue<Node<T>*> next;
+        next.push(this);
+
+        while (!next.empty()) {
+            Node<T>* temp = next.front();
+            next.pop();
+
+            temp->printKeys();
+
+            for (int i = 0; i < temp->childs.size(); i++) {
+                next.push(temp->childs[i]);
+            }
+
+            cout << endl << endl;
+        } 
+    }
     
+    void printKeys() {
+        for (int i = 0; i < keys.size(); i++) {
+            cout << keys[i] << " ";
+        }
+    }
+
     void clearNode(){
                 keys.clear();
                 delete this;
-                this = nullptr;
+                //this = nullptr;
             }
 
         friend class Tree;
